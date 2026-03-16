@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  startup-monitor:
+    build: .
+    container_name: startup-monitor
+    restart: unless-stopped
+    env_file:
+      - .env
+    volumes:
+      # Persist SQLite database across container restarts
+      - ./data:/app/data
+    environment:
+      - PYTHONUNBUFFERED=1
+      - DB_PATH=/app/data/startups.db
